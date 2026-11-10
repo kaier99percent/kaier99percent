@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaier99% In Thoughts</title>
+<style>
+  :root {
+    --bg: #fbfbfb;
+    --surface: #ffffff;
+    --text: #0a0a0a;
+    --text-2: #404040;
+    --text-3: #737373;
+    --border: #e8e8e8;
+    --border-2: #d4d4d4;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --ok: #16a34a;
+    --warn: #ca8a04;
+    --bad: #dc2626;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.006em;
+  }
+  
+  .mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+    letter-spacing: 0;
+  }
+  
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+  
+  .logo {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .logo .pct { color: var(--text-3); font-weight: 500; }
+  .logo:hover { text-decoration: none; }
+  
+  nav.main-nav { display: flex; gap: 24px; }
+  
+  nav.main-nav a {
+    font-size: 14px;
+    color: var(--text-3);
+    text-decoration: none;
+    padding: 4px 0;
+    position: relative;
+  }
+  nav.main-nav a:hover { color: var(--text); }
+  nav.main-nav a.active { color: var(--text); font-weight: 500; }
+  nav.main-nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 1px;
+  }
+  
+  /* MAIN */
+  main { padding: 48px 0 80px; }
+  
+  .tab { display: none; }
+  .tab.active { display: block; }
+  
+  /* HOME */
+  .home .intro {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+    margin-bottom: 32px;
+    max-width: 620px;
+  }
+  
+  .home .sub {
+    font-size: 18px;
+    color: var(--text-2);
+    margin-bottom: 16px;
+    max-width: 600px;
+    line-height: 1.55;
+  }
+  
+  .home p {
+    color: var(--text-2);
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+  
+  .topics {
+    margin: 40px 0;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .topics-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-3);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 32px;
+  }
+  
+  .topic-grid .topic-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  
+  .topic-grid .topic-desc {
+    font-size: 14px;
+    color: var(--text-3);
+    line-height: 1.5;
+  }
+  
+  .latest-cta {
+    margin-top: 40px;
+  }
+  
+  .latest-cta .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-3);
+    margin-bottom: 10px;
+  }
+  
+  .latest-cta .cta {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 3px;
+  }
+  .latest-cta .cta:hover { color: var(--accent); border-color: var(--accent); }
+  
+  /* SOURCES */
+  .sources-intro h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  
+  .sources-intro p {
+    color: var(--text-2);
+    margin-bottom: 12px;
+    max-width: 600px;
+  }
+  
+  .sources-intro p:last-child { margin-bottom: 0; }
+  
+  /* TOC */
+  .toc {
+    margin: 32px 0 48px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 24px;
+    font-size: 14px;
+  }
+  
+  .toc a {
+    color: var(--text-2);
+    text-decoration: none;
+    padding: 2px 0;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc a span { color: var(--text-3); margin-right: 6px; font-family: ui-monospace, monospace; font-size: 12px; }
+  
+  /* SECTIONS */
+  .src-section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+  
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .sec-num {
+    font-family: ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--text-3);
+    letter-spacing: 0;
+  }
+  
+  .sec-head h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  
+  .sec-sub {
+    font-size: 14.5px;
+    color: var(--text-3);
+    margin: -10px 0 20px 0;
+    margin-left: 34px;
+    line-height: 1.5;
+    max-width: 580px;
+  }
+  
+  /* PAPER */
+  .paper {
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+  }
+  
+  .paper:first-of-type {
+    border-top: none;
+    padding-top: 8px;
+  }
+  
+  .paper .paper-type {
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  
+  .paper .paper-type.main {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  
+  .paper h3 {
+    font-size: 16.5px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  
+  .paper .byline,
+  .paper .venue {
+    font-size: 13.5px;
+    color: var(--text-3);
+    margin-bottom: 2px;
+    line-height: 1.5;
+  }
+  
+  .paper .venue em { color: var(--text-2); font-style: italic; }
+  
+  .paper .venue { margin-bottom: 10px; }
+  
+  .paper p {
+    font-size: 15px;
+    color: var(--text-2);
+    line-height: 1.65;
+    margin-bottom: 8px;
+    max-width: 620px;
+  }
+  
+  .paper p:last-child { margin-bottom: 0; }
+  
+  .paper .links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+  .paper .links a {
+    font-family: ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0;
+  }
+  
+  .paper .links a::after { content: " →"; }
+  
+  /* QUOTE / REWRITE */
+  .rewrite {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    font-size: 14.5px;
+    color: var(--text-2);
+    line-height: 1.6;
+    max-width: 620px;
+    font-family: "Inter", system-ui, sans-serif;
+    letter-spacing: -0.006em;
+  }
+  
+  .rewrite .qlabel {
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-3);
+    margin-bottom: 4px;
+    display: block;
+  }
+  
+  /* CORRECTION STATUS */
+  .paper .status {
+    display: inline-block;
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  
+  .status.ok { color: var(--ok); background: rgba(22, 163, 74, 0.08); }
+  .status.warn { color: var(--warn); background: rgba(202, 138, 4, 0.08); }
+  .status.bad { color: var(--bad); background: rgba(220, 38, 38, 0.08); }
+  
+  /* CONFIDENCE LIST */
+  .conf-list {
+    list-style: none;
+    border-top: 1px solid var(--border);
+  }
+  
+  .conf-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+  
+  .conf-list .name {
+    color: var(--text);
+    font-weight: 500;
+  }
+  
+  .conf-list .verdict {
+    font-family: ui-monospace, monospace;
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+  
+  .conf-list .verdict.ok { color: var(--ok); }
+  .conf-list .verdict.warn { color: var(--warn); }
+  .conf-list .verdict.bad { color: var(--bad); }
+  
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0 48px;
+    font-size: 13.5px;
+    color: var(--text-3);
+  }
+  
+  footer p { margin-bottom: 4px; }
+  
+  @media (max-width: 560px) {
+    .home .intro { font-size: 34px; }
+    .topic-grid { grid-template-columns: 1fr; }
+    .sec-sub { margin-left: 0; margin-top: 8px; }
+    .sec-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .conf-list li { flex-direction: column; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-row">
+      <a href="#" class="logo" data-tab="home">Kaier<span class="pct">99%</span> In Thoughts</a>
+      <nav class="main-nav">
+        <a href="#" data-tab="home" class="active">Home</a>
+        <a href="#" data-tab="sources">Sources</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- HOME -->
+  <div id="tab-home" class="tab active home">
+    <h1 class="intro">Hey, I'm Kaier. I make videos about the weird stuff.</h1>
+    
+    <p class="sub">Science, curious discoveries, and the kind of things you probably wondered about once and then forgot to look up.</p>
+    
+    <p>Not a scientist. Just someone who got curious, fell down a rabbit hole, and decided to drag you down too.</p>
+    
+    <p>Every video starts with a question. I read the real research, test what I can, and try to explain it without making it feel like homework. Sometimes I get stuff wrong. When I do, I say so — the sources page is where I keep track.</p>
+
+    <div class="topics">
+      <div class="topics-label">What I make videos about</div>
+      <div class="topic-grid">
+        <div>
+          <div class="topic-title">Science &amp; nature</div>
+          <div class="topic-desc">Weird biology, strange phenomena, how the world actually works.</div>
+        </div>
+        <div>
+          <div class="topic-title">Technology</div>
+          <div class="topic-desc">New inventions and why they matter.</div>
+        </div>
+        <div>
+          <div class="topic-title">Everyday mysteries</div>
+          <div class="topic-desc">Normal things with weird explanations.</div>
+        </div>
+        <div>
+          <div class="topic-title">Curious discoveries</div>
+          <div class="topic-desc">Paradoxes, misconceptions, facts that make you rethink stuff.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="latest-cta">
+      <div class="label">Latest source page</div>
+      <a href="#" class="cta" data-tab="sources">Why Blueberries Aren't Actually Blue →</a>
+    </div>
+  </div>
+
+  <!-- SOURCES -->
+  <div id="tab-sources" class="tab">
+    <div class="sources-intro">
+      <h1>Sources</h1>
+      <p>Everything I read while making the blueberry video. In order, so you can follow along with the video.</p>
+      <p>Original papers are linked where I could find them. If I got something wrong, it's written down in section 08.</p>
+    </div>
+
+    <nav class="toc">
+      <a href="#s1"><span>01</span>Main paper</a>
+      <a href="#s2"><span>02</span>Pigments</a>
+      <a href="#s3"><span>03</span>Wax</a>
+      <a href="#s4"><span>04</span>Structural color</a>
+      <a href="#s5"><span>05</span>Optics</a>
+      <a href="#s6"><span>06</span>Birds</a>
+      <a href="#s7"><span>07</span>Further reading</a>
+      <a href="#s8"><span>08</span>Corrections</a>
+      <a href="#s9"><span>09</span>Confidence</a>
+    </nav>
+
+    <!-- 01 -->
+    <section class="src-section" id="s1">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <h2>The main paper</h2>
+      </div>
+      <p class="sec-sub">If you only read one thing on this page, read this.</p>
+      
+      <div class="paper">
+        <div class="paper-type main">peer-reviewed</div>
+        <h3>Self-assembled, disordered structural color from fruit wax bloom</h3>
+        <div class="byline">Middleton, Tunstad, Knapp, Winters, McCallum, Whitney</div>
+        <div class="venue"><em>Science Advances</em>, 2024 · doi:10.1126/sciadv.adk4219</div>
+        <p>The paper the whole video is based on. They found the blue comes from the wax, not a pigment. They also recreated the effect in the lab, which is the part that made me trust it.</p>
+        <div class="links">
+          <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10849586/" target="_blank" rel="noopener">read the paper</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/38330016/" target="_blank" rel="noopener">pubmed</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="src-section" id="s2">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <h2>Pigments</h2>
+      </div>
+      <p class="sec-sub">The part everyone assumes is the answer.</p>
+      
+      <div class="paper">
+        <h3>HPLC analysis of anthocyanins in bilberries, blueberries, and their juices</h3>
+        <div class="venue"><em>Journal of Food Science</em>, 2012</div>
+        <p>Where I got the pigment names from.</p>
+        <div class="links"><a href="https://pubmed.ncbi.nlm.nih.gov/20931601/" target="_blank" rel="noopener">pubmed</a></div>
+      </div>
+      
+      <div class="paper">
+        <h3>Anthocyanin structure and pH-dependent extraction from blueberries</h3>
+        <div class="venue">2021</div>
+        <p>Shows why the color changes with pH. That's the "not little packets of blue paint" bit.</p>
+        <div class="links"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8000843/" target="_blank" rel="noopener">read the paper</a></div>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section class="src-section" id="s3">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <h2>The waxy bloom</h2>
+      </div>
+      <p class="sec-sub">That dusty coating you thought was dirt. It's the whole answer.</p>
+
+      <div class="paper">
+        <h3>Effects of cuticular wax on the postharvest quality of blueberry fruit</h3>
+        <div class="byline">Chu et al.</div>
+        <div class="venue"><em>Food Chemistry</em>, 2018</div>
+        <p>The "wax protects the fruit" claim comes from here.</p>
+        <div class="links"><a href="https://pubmed.ncbi.nlm.nih.gov/27765249/" target="_blank" rel="noopener">pubmed</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Cuticular waxes affect fruit surface color in blueberries</h3>
+        <div class="byline">Yan, Dossett, Castellarin</div>
+        <div class="venue"><em>Plants, People, Planet</em>, 2023</div>
+        <p>Wax composition affects how light or dark the surface looks. Independent of the 2024 paper.</p>
+        <div class="links"><a href="https://nph.onlinelibrary.wiley.com/doi/10.1002/ppp3.10368" target="_blank" rel="noopener">read the paper</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Chemical composition and morphology of blueberry wax</h3>
+        <div class="byline">Chu et al.</div>
+        <div class="venue">2017</div>
+        <p>What the wax is actually made of.</p>
+        <div class="links"><a href="https://pubmed.ncbi.nlm.nih.gov/28873622/" target="_blank" rel="noopener">pubmed</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Wax and water loss in blueberries</h3>
+        <div class="byline">Yan, Castellarin</div>
+        <div class="venue">2022</div>
+        <p>More on the wax-as-protection angle.</p>
+        <div class="links"><a href="https://doi.org/10.1016/j.postharvbio.2022.111907" target="_blank" rel="noopener">doi</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Blueberry wax biosynthesis</h3>
+        <div class="venue">2024</div>
+        <p>How the plant builds the wax at a molecular level.</p>
+        <div class="links"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10923646/" target="_blank" rel="noopener">read the paper</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>How plant wax structures form</h3>
+        <div class="byline">Koch, Ensikat</div>
+        <div class="venue">2008</div>
+        <p>Wax self-assembly on plant surfaces. General context.</p>
+        <div class="links"><a href="https://pubmed.ncbi.nlm.nih.gov/18187332/" target="_blank" rel="noopener">pubmed</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Wax self-assembly</h3>
+        <div class="byline">Koch et al.</div>
+        <div class="venue">2004</div>
+        <p>The mechanism behind why wax forms the shapes it does.</p>
+        <div class="links"><a href="https://doi.org/10.1093/jxb/erh077" target="_blank" rel="noopener">doi</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Revisiting plant cuticle biophysics</h3>
+        <div class="venue">2024</div>
+        <p>Broader physics of plant cuticles.</p>
+        <div class="links"><a href="https://doi.org/10.1111/nph.20009" target="_blank" rel="noopener">doi</a></div>
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section class="src-section" id="s4">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <h2>Structural color</h2>
+      </div>
+      <p class="sec-sub">Color without pigment. Physics instead of chemistry.</p>
+
+      <div class="paper">
+        <div class="paper-type main">main paper again</div>
+        <h3>Self-assembled, disordered structural color from fruit wax bloom</h3>
+        <div class="venue"><em>Science Advances</em>, 2024</div>
+        <p>Where the electron microscope images and light scattering stuff comes from. One thing I missed — the wax structures are all different shapes. Rings, rods, slabs, tubes. The disorder is kind of the whole point.</p>
+        <div class="links"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10849586/" target="_blank" rel="noopener">read the paper</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Mechanisms of structural colour in the Morpho butterfly</h3>
+        <div class="venue"><em>Proc. Royal Society B</em>, 2002</div>
+        <p>Where the butterfly comparison comes from.</p>
+        <div class="links"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1691047/" target="_blank" rel="noopener">read the paper</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Structural colors from Morpho peleides butterfly wing scales</h3>
+        <div class="venue"><em>Journal of Applied Physics</em>, 2009</div>
+        <p>More detail on the butterfly, in case the first one wasn't enough.</p>
+        <div class="links"><a href="https://doi.org/10.1063/1.3239513" target="_blank" rel="noopener">doi</a></div>
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section class="src-section" id="s5">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <h2>Light and optics</h2>
+      </div>
+      <p class="sec-sub">The section where I have to eat some humble pie.</p>
+
+      <div class="paper">
+        <div class="paper-type main">the oil thing</div>
+        <h3>Main paper — methods section</h3>
+        <div class="venue"><em>Science Advances</em>, 2024</div>
+        <p>They used oil to match the wax's refractive index, so the wax "disappears" from the light's point of view. They used chloroform to actually dissolve it. I mixed those two up — see section 08.</p>
+        <div class="links"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10849586/" target="_blank" rel="noopener">read the paper</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Main paper — optics section</h3>
+        <div class="venue">Supplementary</div>
+        <p>The scattering comes from randomly arranged particles. Not a neat pattern like the Morpho butterfly, not a thin film like a soap bubble. Disordered scattering.</p>
+      </div>
+    </section>
+
+    <!-- 06 -->
+    <section class="src-section" id="s6">
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <h2>Birds</h2>
+      </div>
+      <p class="sec-sub">The "berry is basically a delivery service for the plant" section.</p>
+
+      <div class="paper">
+        <h3>Ultraviolet reflection of berries attracts foraging birds: redwings and bilberries</h3>
+        <div class="venue"><em>Proc. Royal Society B</em>, 1999</div>
+        <p>The closest thing to a real test of the "birds like the UV ones" idea. Adult redwings preferred UV-reflecting bilberries when UV light was on. Caveats: bilberries, not blueberries, and young birds didn't show the preference.</p>
+        <div class="links"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1690328/" target="_blank" rel="noopener">read the paper</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Ultraviolet vision in birds: the importance of transparent eye media</h3>
+        <div class="venue"><em>Proc. Royal Society B</em>, 2014</div>
+        <p>Not all birds see UV the same way. Some see UV, some see violet.</p>
+        <div class="links"><a href="https://doi.org/10.1098/rspb.2013.2209" target="_blank" rel="noopener">doi</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>The role of detectability in the evolution of avian-dispersed fruit color</h3>
+        <div class="venue">2022</div>
+        <p>How fruit color relates to whether a bird can actually spot the fruit.</p>
+        <div class="links"><a href="https://pubmed.ncbi.nlm.nih.gov/35381423/" target="_blank" rel="noopener">pubmed</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Are fruit colors adapted to consumer vision, and are birds equally efficient at detecting colorful signals?</h3>
+        <div class="venue">2009</div>
+        <p>UV sensitivity doesn't automatically make every fruit pop against the background.</p>
+        <div class="links"><a href="https://pubmed.ncbi.nlm.nih.gov/19296489/" target="_blank" rel="noopener">pubmed</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>Whether fruit colours evolved to be detectable to birds</h3>
+        <div class="byline">Tedore et al.</div>
+        <div class="venue">2022</div>
+        <p>Direct test of the detectability idea.</p>
+        <div class="links"><a href="https://pubmed.ncbi.nlm.nih.gov/35381423/" target="_blank" rel="noopener">pubmed</a></div>
+      </div>
+    </section>
+
+    <!-- 07 -->
+    <section class="src-section" id="s7">
+      <div class="sec-head">
+        <span class="sec-num">07</span>
+        <h2>Further reading</h2>
+      </div>
+      <p class="sec-sub">The accessible stuff, if you don't want to read a full paper.</p>
+
+      <div class="paper">
+        <h3>Fruity blues</h3>
+        <div class="byline">Bart Verberck</div>
+        <div class="venue"><em>Nature Physics</em>, 2024</div>
+        <p>Short write-up of the paper. Good if you don't want to read the whole thing.</p>
+        <div class="links"><a href="https://doi.org/10.1038/s41567-024-02450-y" target="_blank" rel="noopener">doi</a></div>
+      </div>
+
+      <div class="paper">
+        <h3>It's the wax: blue fruits get their hue from their coating's crystalline structure</h3>
+        <div class="venue"><em>C&amp;EN</em>, 2024</div>
+        <p>Accessible article version. Good to send to someone who won't read a paper.</p>
+        <div class="links"><a href="https://cen.acs.org/materials/coatings/its-wax-blue-fruits-get-their-hue-from-their-coating-crystalline-structure/102/web/2024/02" target="_blank" rel="noopener">read the article</a></div>
+      </div>
+    </section>
+
+    <!-- 08 -->
+    <section class="src-section" id="s8">
+      <div class="sec-head">
+        <span class="sec-num">08</span>
+        <h2>If I could re-record it</h2>
+      </div>
+      <p class="sec-sub">After the video went up, I went back through the papers. Here's what I'd say differently.</p>
+
+      <div class="paper">
+        <span class="status ok">no notes</span>
+        <h3>The wax is doing the color work</h3>
+        <p>This holds up. It's literally what the paper says.</p>
+      </div>
+
+      <div class="paper">
+        <span class="status warn">too strong</span>
+        <h3>"Blueberries contain no blue pigment"</h3>
+        <p>They do have pigments. They just aren't what makes the outside look blue. I should have said the matte-blue <em>look</em> isn't from a pigment.</p>
+        <div class="rewrite">
+          <span class="qlabel">what I'd say now</span>
+          "The intense matte-blue look isn't from a blue pigment. It's the wax coating interacting with light."
+        </div>
+      </div>
+
+      <div class="paper">
+        <span class="status bad">actually wrong</span>
+        <h3>"The oil dissolves the wax"</h3>
+        <p>This one's just wrong. The oil matched the wax's refractive index, which made the wax invisible to light. Chloroform was used to actually dissolve the wax. Two different experiments and I mashed them together.</p>
+        <div class="rewrite">
+          <span class="qlabel">correct version</span>
+          "The oil doesn't dissolve the wax. It has a similar refractive index, which stops the light from scattering off the wax the way it normally would."
+        </div>
+      </div>
+
+      <div class="paper">
+        <span class="status warn">could be clearer</span>
+        <h3>"The wax scatters blue and UV"</h3>
+        <p>True, but I made it sound like the butterfly thing. It's not. The scattering comes from randomly arranged particles, not a neat ordered pattern.</p>
+      </div>
+
+      <div class="paper">
+        <span class="status warn">hypothesis, not fact</span>
+        <h3>"Birds are the target audience"</h3>
+        <p>I said this like it was settled. It's not. The redwing study (section 06) is decent evidence, but it used bilberries and young birds didn't react. Plausible, not proven.</p>
+      </div>
+
+      <div class="paper">
+        <span class="status warn">detail I missed</span>
+        <h3>Wax structures aren't all the same</h3>
+        <p>Rings, rods, slabs, tubes. Lots of shapes. I described them like they were one neat structure. The disorder is the whole point of the paper and I undersold it.</p>
+      </div>
+    </section>
+
+    <!-- 09 -->
+    <section class="src-section" id="s9">
+      <div class="sec-head">
+        <span class="sec-num">09</span>
+        <h2>How confident am I</h2>
+      </div>
+      <p class="sec-sub">My honest read of each part of the video.</p>
+
+      <ul class="conf-list">
+        <li><span class="name">Pigments</span><span class="verdict ok">confident</span></li>
+        <li><span class="name">Wax</span><span class="verdict ok">confident</span></li>
+        <li><span class="name">Wax removal</span><span class="verdict ok">confident</span></li>
+        <li><span class="name">Oil experiment</span><span class="verdict bad">got it wrong, fixing</span></li>
+        <li><span class="name">Structural color</span><span class="verdict ok">very confident</span></li>
+        <li><span class="name">Electron microscopy</span><span class="verdict ok">confident</span></li>
+        <li><span class="name">Blue &amp; UV scattering</span><span class="verdict ok">confident</span></li>
+        <li><span class="name">Evolutionary story</span><span class="verdict warn">still being tested</span></li>
+        <li><span class="name">Bird attraction</span><span class="verdict warn">some evidence</span></li>
+      </ul>
+    </section>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Kaier99% In Thoughts · science, curiosity, and a little "wait, what?"</p>
+    <p>Last updated November 2026</p>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('[data-tab]');
+  const panels = document.querySelectorAll('.tab');
+  const navLinks = document.querySelectorAll('nav.main-nav a');
+
+  function showTab(name) {
+    panels.forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
+    navLinks.forEach(n => n.classList.toggle('active', n.dataset.tab === name));
+    window.scrollTo(0, 0);
+  }
+
+  tabs.forEach(el => {
+    el.addEventListener('click', e => {
+      const name = el.dataset.tab;
+      if (!name) return;
+      e.preventDefault();
+      showTab(name);
+    });
+  });
+</script>
+
+</body>
+</html>
